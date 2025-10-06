@@ -1,8 +1,4 @@
-
 import userData from '../fixtures/userData.json';
-
-
-
 
 describe('Create New Hero', () => {
   const seletores = {
@@ -21,7 +17,6 @@ describe('Create New Hero', () => {
 
   }
 
-
   beforeEach(() => {
     cy.visit('/heroes')
     cy.get("button").first().click()
@@ -36,9 +31,15 @@ describe('Create New Hero', () => {
       cy.get(seletores.campoFans).type('100')
       cy.get(seletores.campoSalva).type('2000')
       cy.get(seletores.campoPowers).select('Fireball')
-      //falta inserir o avatar aqui
+      cy.get(seletores.campoAvatar).selectFile('cypress/fixtures/avatar.jpg');
       cy.get(seletores.botaoSalvar).eq(1).click()
       cy.contains('Homen de Ferro').should('be.visible')
       cy.url().should('include', '/heroes')
     })
+  it('Deve exibir mensagem de erro ao tentar criar heroi sem preencher os campos obrigatorios', () => {
+      cy.get("[href='/heroes/new']").click()
+      cy.get(seletores.botaoSalvar).eq(1).click()
+      cy.get('.text-red-500').should('be.visible')
+    })
+
   })
