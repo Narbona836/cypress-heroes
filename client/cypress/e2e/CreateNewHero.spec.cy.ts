@@ -2,10 +2,13 @@ import userData from '../fixtures/userData.json';
 
 describe('Create New Hero', () => {
   const seletores = {
-    butonLogin: "button",
+    buttonLogar: 'li > .undefined',
+    butonLogin: ".bg-blue-700",
     campoEmail:"[name='email']",
     campoPassword: "[name='password']",
+    buttonLogout: "nav > .flex > :nth-child(2) > .undefined",
   //seletores para criar novo heroi
+    buttonCreateNewHero: "[href='/heroes/new']",
     butonSave: ".text-white",
     campoName: "[type='text']",
     campoPreco: "[name='price']",
@@ -19,13 +22,14 @@ describe('Create New Hero', () => {
 
   beforeEach(() => {
     cy.visit('/heroes')
-    cy.get("button").first().click()
+    cy.get(seletores.buttonLogar).first().click()
     cy.get(seletores.campoEmail).type(userData.userSuccess.email)
     cy.get(seletores.campoPassword).type(userData.userSuccess.password)
-    cy.get(seletores.butonLogin).contains('Sign in').click()
+    cy.get(seletores.butonLogin).click()
+    cy.get(seletores.buttonLogout, { timeout: 10000 }).should('be.visible')
   })
   it('Deve criar um novo heroi', () => {
-      cy.get("[href='/heroes/new']").click()
+      cy.get(seletores.buttonCreateNewHero).click()
       cy.get(seletores.campoName).type('Homen de Ferro')
       cy.get(seletores.campoPreco).type('5000')
       cy.get(seletores.campoFans).type('100')

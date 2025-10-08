@@ -4,10 +4,12 @@ describe('Sucesso ao Interagir com Herois', () => {
 
     const seletores = {
         //seletores para login
-        butonLogin: "button",
+        butonLogin: 'li > .undefined',
         campoEmail:"[name='email']",
         campoPassword: "[name='password']",
         botaoCreateNewHero: "[href='/heroes/new']",
+        buttonSignIn: ".bg-blue-700",
+        buttonLogout: "nav > .flex > :nth-child(2) > .undefined",
         //seletores para interagir com herois
         botaoLike: "[data-cy='like']",
         fans:"[data-cy='fans']",
@@ -27,14 +29,13 @@ describe('Sucesso ao Interagir com Herois', () => {
 
   beforeEach(() => {
     cy.visit('/heroes')
-    cy.get("button").first().click()
+    cy.get(seletores.butonLogin).first().click()
     cy.get(seletores.campoEmail).type(userData.userSuccess.email)
     cy.get(seletores.campoPassword).type(userData.userSuccess.password)
-    cy.get(seletores.butonLogin).contains('Sign in').click()
-    cy.get('header.text-gray-500 > .justify-between', { timeout: 10000 }).should('be.visible')
+    cy.get(seletores.buttonSignIn).click()
+    cy.get(seletores.buttonLogout, { timeout: 10000 }).should('be.visible')
 
   })
-
   it('Deve conseguir interagir com os heróis', () => {
     cy.visit('/heroes')
     cy.get(seletores.botaoLike).eq(2).click()

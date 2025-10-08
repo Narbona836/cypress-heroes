@@ -8,6 +8,7 @@ describe('Login Page', () => {
     campoEmail:"[name='email']",
     campoPassword: "[name='password']",
     butonSave: ".text-white",
+    buttonLogout: "nav > .flex > :nth-child(2) > .undefined",
 
   }
   it('Deve fazer o Login com sucesso', () => {
@@ -16,7 +17,7 @@ describe('Login Page', () => {
     cy.get(seletores.campoEmail).type(userData.userSuccess.email)
     cy.get(seletores.campoPassword).type(userData.userSuccess.password)
     cy.get(seletores.butonSave).click()
-    cy.get('header.text-gray-500 > .justify-between')
+    cy.get(seletores.buttonLogout, { timeout: 10000 }).should('be.visible')
   })
 
   it('Deve exibir mensagem de erro ao inserir usuario invalido', () => {
